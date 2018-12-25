@@ -4,6 +4,10 @@ import numpy as np
 
 IMAGE_SIZE = (224, 224)
 IMAGE_SIZE_WITH_CHANNELS = list(IMAGE_SIZE) + [3]
+TRAIN_IMAGES_SOURCE_PATH = '../input/train'
+TRAIN_IMAGES_PICKLE_PATH = '../data/train-images.pkl'
+TEST_IMAGES_SOURCE_PATH = '../input/test'
+TEST_IMAGES_PICKLE_PATH = '../data/test-images.pkl'
 
 
 def pickle_read(fname):

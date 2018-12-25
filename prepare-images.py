@@ -35,7 +35,7 @@ def _load_directory(dirname):
 
 
 if __name__ == '__main__':
-    train_images = _load_directory('../input/train')
-    common.pickle_write('../data/train-images.pkl', train_images)
-    test_images = _load_directory('../input/test')
-    common.pickle_write('../data/test-images.pkl', test_images)
+    train_images = _load_directory(common.TRAIN_IMAGES_SOURCE_PATH)
+    common.pickle_write(common.TRAIN_IMAGES_PICKLE_PATH, train_images)
+    test_images = _load_directory(common.TEST_IMAGES_SOURCE_PATH)
+    common.pickle_write(common.TEST_IMAGES_PICKLE_PATH, test_images)
