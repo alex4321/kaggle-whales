@@ -19,7 +19,7 @@ def get_mappings(fname):
     df = df.loc[~new_whale_idx].reset_index(drop=True)
     ids = pd.Series(df['Id'].unique())
     ids_shuffled = ids.sample(len(ids), random_state=RANDOM_STATE)
-    train_ids_count = len(ids_shuffled) * TRAIN_IDS_COUNT
+    train_ids_count = int(len(ids_shuffled) * TRAIN_IDS_COUNT)
     val_ids_count = len(ids_shuffled) - train_ids_count
     train_ids = set(ids_shuffled.head(train_ids_count))
     val_ids = set(ids_shuffled.tail(val_ids_count))
@@ -48,7 +48,7 @@ class TripletDataset(Dataset):
         self.augmenter = self._build_augmenter()
 
     def __len__(self):
-        return len(self)
+        return len(self.triplet)
 
     def _build_augmenter(self, p=0.5):
         return Compose([

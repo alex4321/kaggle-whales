@@ -8,6 +8,14 @@ TRAIN_IMAGES_SOURCE_PATH = '../input/train'
 TRAIN_IMAGES_PICKLE_PATH = '../data/train-images.pkl'
 TEST_IMAGES_SOURCE_PATH = '../input/test'
 TEST_IMAGES_PICKLE_PATH = '../data/test-images.pkl'
+VECTOR_SIZE = 300
+TRAIN_MAPPING = '../input/train.csv'
+TRIPLET_BATCH_SIZE = 8
+EMBEDDING_BATCH_SIZE = 32
+DEVICE = 'cuda'
+TRIPLET_MODELS_DIRECTORY = '../data/triplet-models-{time}'
+TRIPLET_MAX_EPOCHS = 100
+TRIPLET_EARLY_STOPPING_PATIENCE = 10
 
 
 def pickle_read(fname):
