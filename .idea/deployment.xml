@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="user@devbox:22">
+    <serverData>
+      <paths name="user@devbox:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/user/Documents/whales/code" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/home/user/Documents/whales/code/train-images.pkl" />
+            <excludedPath path="/home/user/Documents/whales/code/test-images.pkl" />
+            <excludedPath path="/home/user/Documents/whales/code/models" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

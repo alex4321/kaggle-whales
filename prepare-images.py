@@ -1,41 +1,41 @@
 import os
-import joblib
+from joblib import Parallel, delayed
 import numpy as np
+from tqdm import tqdm
 from skimage.io import imread
 from skimage.transform import resize
-from tqdm import tqdm
 import common
-
-N_JOBS = 4
+import config
 
 
 def _load_image(fname):
     image = imread(fname)
-    image = resize(image, common.IMAGE_SIZE_WITH_CHANNELS,
+    image = resize(image,
+                   config.IMAGES_SIZE,
                    mode='constant',
                    anti_aliasing=True,
-                   preserve_range=False)
+                   preserve_range=True)
+    if list(image.shape) != list(config.IMAGES_SIZE_WITH_CHANNELS):
+        image = np.stack([image, image, image], axis=-1).reshape(config.IMAGES_SIZE_WITH_CHANNELS)
     image = image.astype(np.uint8)
-    if list(image.shape) != common.IMAGE_SIZE_WITH_CHANNELS:  # Grayscale images have 1 channel
-        image = np.stack([image, image, image],
-                         axis=-1)
-        image = image.reshape(common.IMAGE_SIZE_WITH_CHANNELS)
     return image
 
 
-def _load_directory(dirname):
-    fnames = sorted(os.listdir(dirname))
-    files = [os.path.join(dirname, file)
-             for file in fnames]
-    with joblib.Parallel(n_jobs=N_JOBS) as parallel:
-        images = parallel(joblib.delayed(_load_image)(file)
-                          for file in tqdm(files))
-    result = dict(zip(fnames, images))
-    return result
+def _load_directory(directory):
+    files = os.listdir(directory)
+    images = Parallel(n_jobs=config.IMAGE_PREPARE_JOBS) (
+        delayed(_load_image)(os.path.join(directory, fname))
+        for fname in tqdm(files)
+    )
+    return dict(zip(files, images))
 
 
 if __name__ == '__main__':
-    train_images = _load_directory(common.TRAIN_IMAGES_SOURCE_PATH)
-    common.pickle_write(common.TRAIN_IMAGES_PICKLE_PATH, train_images)
-    test_images = _load_directory(common.TEST_IMAGES_SOURCE_PATH)
-    common.pickle_write(common.TEST_IMAGES_PICKLE_PATH, test_images)
+    common.write_pickle(
+        _load_directory(config.TRAIN_DIR),
+        config.TRAIN_IMAGES_PICKLE
+    )
+    common.write_pickle(
+        _load_directory(config.TEST_DIR),
+        config.TEST_IMAGES_PICKLE
+    )
