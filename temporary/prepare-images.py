@@ -4,8 +4,7 @@ import numpy as np
 from tqdm import tqdm
 from skimage.io import imread
 from skimage.transform import resize
-import common
-import config
+from temporary import common, config
 
 
 def _load_image(fname):
